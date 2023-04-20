@@ -65,8 +65,8 @@ function getCurrentCrypto(url) {
         `;
         document.getElementById("crypto").innerHTML += `
 
-            <div>👆: ${data.market_data.high_24h.try} TRY</div>
-            <div>👇: ${data.market_data.low_24h.try} TRY</div>
+            <div>⬆: ${data.market_data.high_24h.try} TRY</div>
+            <div>⬇: ${data.market_data.low_24h.try} TRY</div>
         `;
       });
   } catch (err) {
@@ -74,7 +74,7 @@ function getCurrentCrypto(url) {
   }
 }
 
-getCurrentCrypto("https://api.coingecko.com/api/v3/coins/bitcoin");
+//getCurrentCrypto("https://api.coingecko.com/api/v3/coins/bitcoin");
 getCurrentCrypto("https://api.coingecko.com/api/v3/coins/dogecoin");
 
 //--------get weather----------
@@ -87,7 +87,10 @@ navigator.geolocation.getCurrentPosition((position) => {
   )
     .then((res) => {
       if (!res.ok) {
-        throw Error("Weather data not available");
+        document.getElementById(
+          "weather"
+        ).innerHTML = ` <div class="loader"></div>`;
+        throw Error();
       }
       return res.json();
     })
@@ -97,9 +100,18 @@ navigator.geolocation.getCurrentPosition((position) => {
       ).innerHTML = `<div class="weather-cond"><img src="https://openweathermap.org/img/wn/${
         data.weather[0].icon
       }@2x.png" width="80"/> 
-        <span>${Math.round(data.main.temp)}</span>
+        <span>${Math.round(data.main.temp)}º</span>
         </div>
       <div class="location">${data.name}</div>`;
     })
     .catch((err) => console.error(err));
 });
+//----get inpiration quotes----
+fetch("https://api.goprogram.ai/inspiration")
+  .then((res) => res.json())
+  .then((data) => {
+    console.log(data);
+    document.getElementById(
+      "inspiration"
+    ).innerHTML = `"${data.quote}" ${data.author}`;
+  });

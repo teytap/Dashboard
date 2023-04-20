@@ -14,7 +14,7 @@ body {
   background-size: cover;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
-  text-shadow: 0px 0px 20px #aaaaaa;
+  /* text-shadow: 0px 0px 20px #aaaaaa; */
 }
 main {
   height: 100vh;
@@ -32,14 +32,41 @@ main {
   justify-content: space-between;
   align-items: end;
 }
+.middle,
+#crypto,
+#weather,
+#photograhper,
+#todos {
+  /* background-color: rgba(225, 225, 225, 0.4); */
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+}
+#weather,
+#photograhper,
+#todos {
+  padding: 14px;
+}
+#inspiration {
+  font-size: 18px;
+  line-height: 30px;
+  border-top: 1px solid white;
+  padding-top: 30px;
+}
 .middle {
-  display: flex;
+  /* display: flex;
   justify-content: center;
+  align-self: center; */
+  max-width: 450px;
+  padding: 20px;
+  text-align: center;
+  margin: 0 auto;
 }
 .middle h1 {
   font-size: 52px;
 }
 #crypto {
+  padding: 20px;
+
   text-shadow: 0px 0px 4px rgb(50, 50, 50);
 }
 #crypto .crypto-data span {
@@ -51,6 +78,7 @@ main {
   margin: 10px 0px 4px 0px;
 }
 /* ---weather--- */
+
 .location {
   text-align: right;
   font-size: 20px;
@@ -61,4 +89,23 @@ main {
 }
 .weather-cond span {
   font-size: 36px;
+  margin-left: -10px;
+}
+/* ---loader--- */
+.loader {
+  border: 4px solid #f3f3f3; /* Light grey */
+  border-top: 4px solid grey; /* Blue */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
