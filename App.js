@@ -1,35 +1,22 @@
-// async function getBackgroundImage() {
-//   const response = await fetch(
-//     "https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature"
-//   );
-//   const data = await response.json();
-//   console.log(data);
-
-//   document.body.style.backgroundImage = `url("${data.urls.raw}")`;
-//   document.getElementById("photograhper").textContent = `By: ${data.user.name}`;
-// }
-// getBackgroundImage();
-
 //------display time--------
-function getCurrentTime() {
-  const date = new Date();
-  document.getElementById("time").textContent = date.toLocaleTimeString(
-    "en-us",
-    { timeStyle: "short" }
-  );
-}
-setInterval(getCurrentTime, 1000);
-// setInterval(function () {
+// function getCurrentTime() {
 //   const date = new Date();
-//   let hour = date.getHours();
-//   let minute = date.getMinutes();
+//   document.getElementById("time").textContent = date.toLocaleTimeString(
+//     "en-us",
+//     { timeStyle: "short" }
+//   );
+// }
+// setInterval(getCurrentTime, 1000);
+setInterval(function () {
+  const date = new Date();
+  let hour = date.getHours();
+  let minute = date.getMinutes();
 
-//   let h = hour < 10 ? "0" + hour : hour;
-//   let m = minute < 10 ? "0" + minute : minute;
-//   let time = h + ":" + m;
-//   document.getElementById("time").textContent = time;
-//   console.log(time);
-// }, 60000);
+  let h = hour < 10 ? "0" + hour : hour;
+  let m = minute < 10 ? "0" + minute : minute;
+  let time = h + ":" + m;
+  document.getElementById("time").textContent = time;
+}, 1000);
 
 //------get background image-------
 fetch(
@@ -45,6 +32,7 @@ fetch(
   .catch((err) => {
     console.log(err);
     document.body.style.backgroundImage = `url("https://images.unsplash.com/photo-1503614472-8c93d56e92ce?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDI0NzB8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODE4OTcwMzc&ixlib=rb-4.0.3&q=85")`;
+    document.body.style.backgroundColor = "grey";
   });
 
 //------get current crypto values-----
@@ -52,7 +40,6 @@ function getCurrentCrypto(url) {
   try {
     fetch(`${url}`)
       .then((res) => {
-        console.log(res.status);
         if (!res.ok) {
           throw Error("Something went wrong");
         }
@@ -110,8 +97,84 @@ navigator.geolocation.getCurrentPosition((position) => {
 fetch("https://api.goprogram.ai/inspiration")
   .then((res) => res.json())
   .then((data) => {
-    console.log(data);
     document.getElementById(
       "inspiration"
     ).innerHTML = `"${data.quote}" ${data.author}`;
   });
+// -----todo list-----
+let todoArray;
+
+let localTaskValues = JSON.parse(localStorage.getItem("localTask"));
+if (localStorage.getItem("localTask")) {
+  todoArray = JSON.parse(localStorage.getItem("localTask"));
+} else {
+  todoArray = [];
+}
+
+function renderTodo() {
+  const todoList = document.getElementById("to-do-list");
+  let todoHtml = "";
+  for (task of localTaskValues) {
+    todoHtml += `<li>
+        <span class="todo-item ${localTaskValues.indexOf(
+          task
+        )}" data-todo="${localTaskValues.indexOf(task)}">${task}</span>
+        <i class="fa-solid fa-check btn check-btn" id="check-btn" 
+        data-todo="${localTaskValues.indexOf(task)}"
+        ></i>
+       
+          <i class="fa-solid fa-trash-can btn" id="delete-btn" data-todo="${localTaskValues.indexOf(
+            task
+          )}"></i>
+        
+      </li>`;
+  }
+  todoList.innerHTML = todoHtml;
+}
+
+document.addEventListener("click", (e) => {
+  //-----open/close todo list-----
+  if (e.target.id === `todos`) {
+    document.getElementById("todo-container").classList.toggle("hide");
+
+    renderTodo();
+  }
+  //-----add button-----
+  if (e.target.id === `add-btn`) {
+    e.preventDefault();
+    const taskInput = document.getElementById("task-input").value;
+    if (taskInput) {
+      todoArray.push(taskInput);
+      localStorage.setItem("localTask", JSON.stringify(todoArray));
+      localTaskValues = JSON.parse(localStorage.getItem("localTask"));
+      renderTodo();
+    } else {
+      console.log("please write something");
+    }
+    renderTodo();
+  }
+  //-----check button-----
+  if (e.target.id === `check-btn`) {
+    const todoItems = document.getElementsByClassName("todo-item");
+    const targetTodo = Object.values(todoItems).filter((item) => {
+      return item.dataset.todo === e.target.dataset.todo;
+    });
+
+    targetTodo[0].classList.toggle("done");
+  }
+  //-----delete button-----
+  if (e.target.id === `delete-btn`) {
+    const todoItems = document.getElementsByClassName("todo-item");
+    const targetTodo = Object.values(todoItems).filter((item) => {
+      return item.dataset.todo === e.target.dataset.todo;
+    });
+    const index = todoArray.indexOf(targetTodo[0].innerText);
+    if (index > -1) {
+      todoArray.splice(index, 1);
+    }
+
+    localStorage.setItem("localTask", JSON.stringify(todoArray));
+    localTaskValues = JSON.parse(localStorage.getItem("localTask"));
+    renderTodo();
+  }
+});

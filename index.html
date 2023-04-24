@@ -4,7 +4,18 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- font awesome -->
+    <script
+      src="https://kit.fontawesome.com/ddac49f148.js"
+      crossorigin="anonymous"
+    ></script>
     <!-- style -->
     <link rel="stylesheet" href="styles.css" />
     <title>Dasboard</title>
@@ -21,8 +32,22 @@
         <div id="inspiration"></div>
       </div>
       <div class="bottom">
-        <p id="photograhper"></p>
-        <div id="todos">todo</div>
+        <div id="photograhper"></div>
+        <button id="sticky-notes">
+          <i class="fa-solid fa-note-sticky"></i> Sticky Notes
+        </button>
+        <div class="todos">
+          <div id="todo-container" class="hide todos-container">
+            <div id="new-task">
+              <input type="text" placeholder=" Add new task" id="task-input" />
+              <button class="btn">
+                <i class="fa-solid fa-plus" id="add-btn"></i>
+              </button>
+            </div>
+            <ul id="to-do-list"></ul>
+          </div>
+          <button id="todos"><i class="fa-solid fa-list"></i> Todo List</button>
+        </div>
       </div>
     </main>
     <script src="App.js"></script>
