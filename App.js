@@ -11,7 +11,6 @@ setInterval(function () {
   const date = new Date();
   let hour = date.getHours();
   let minute = date.getMinutes();
-
   let h = hour < 10 ? "0" + hour : hour;
   let m = minute < 10 ? "0" + minute : minute;
   let time = h + ":" + m;
@@ -94,6 +93,7 @@ navigator.geolocation.getCurrentPosition((position) => {
     .catch((err) => console.error(err));
 });
 //----get inpiration quotes----
+
 fetch("https://api.goprogram.ai/inspiration")
   .then((res) => res.json())
   .then((data) => {
@@ -102,6 +102,7 @@ fetch("https://api.goprogram.ai/inspiration")
     ).innerHTML = `"${data.quote}" ${data.author}`;
   });
 // -----todo list-----
+
 let todoArray;
 
 let localTaskValues = JSON.parse(localStorage.getItem("localTask"));
@@ -119,13 +120,17 @@ function renderTodo() {
         <span class="todo-item ${localTaskValues.indexOf(
           task
         )}" data-todo="${localTaskValues.indexOf(task)}">${task}</span>
-        <i class="fa-solid fa-check btn check-btn" id="check-btn" 
-        data-todo="${localTaskValues.indexOf(task)}"
-        ></i>
-       
-          <i class="fa-solid fa-trash-can btn" id="delete-btn" data-todo="${localTaskValues.indexOf(
-            task
-          )}"></i>
+        <span class="material-symbols-outlined btn check-btn" id="check-btn"  data-todo="${localTaskValues.indexOf(
+          task
+        )}">
+check
+</span>
+<span class="material-symbols-outlined btn" id="delete-btn" data-todo="${localTaskValues.indexOf(
+      task
+    )}">
+delete
+</span>
+      
         
       </li>`;
   }
@@ -136,7 +141,6 @@ document.addEventListener("click", (e) => {
   //-----open/close todo list-----
   if (e.target.id === `todos`) {
     document.getElementById("todo-container").classList.toggle("hide");
-
     renderTodo();
   }
   //-----add button-----

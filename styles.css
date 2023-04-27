@@ -16,6 +16,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   /* text-shadow: 0px 0px 20px #aaaaaa; */
 }
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
 main {
   height: 100vh;
   display: flex;
@@ -116,6 +121,13 @@ main {
   display: flex;
   flex-direction: column;
 }
+#todos {
+  display: flex;
+  align-items: center;
+}
+#todos span {
+  margin-right: 5px;
+}
 .todos ul {
   margin-left: 0;
   padding: 0;
@@ -153,4 +165,5 @@ main {
 }
 #add-btn {
   padding: 5px;
+  font-size: 24px;
 }
